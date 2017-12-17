@@ -14,7 +14,7 @@ The objetive of this test if to help us evalute your skills with:
 
 * Fork the repo into a private repo.
 * Create a virtualenv for this project and install requirements.txt file
-* Modify the pr-api module to complete the require API endpoints
+* Modify the main module to complete the required API endpoints
 * Let us know when you have finished.
 
 **Tasks**
