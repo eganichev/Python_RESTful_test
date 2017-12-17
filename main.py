@@ -75,7 +75,7 @@ def delete_user(user_id):
 
 @app.route('/todo/api/v1.0/distances', methods=['GET'])
 @auth.login_required
-def get_distances(user_id):
+def get_distances():
     """
     Each user has a lat/lon associated with them.  Determine the distance
     between each user pair, and provide the min/max/average/std as a json response.
