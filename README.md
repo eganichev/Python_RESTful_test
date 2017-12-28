@@ -18,18 +18,15 @@ $ virtualenv -p python3.5 venv
 $ source venv/bin/activate
 $ cd Python_RESTful_test
 $ pip install -r requirements.txt
+$ python main.py
 ```
 if you want to edit configurations, change this in main.py 
 ```
 HOST = '0.0.0.0'
 DB_HOST = 'db'
 ```
-```
-python main.py
-```
 
 **Testing**
-
 ```
 python -m unittests tests/test_main.py
 ```
