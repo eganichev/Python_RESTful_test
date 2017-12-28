@@ -25,4 +25,4 @@ docker-compose up
 
 **Testing**
 
-Run: python tests/test_main.py
+Run: python -m unittests tests/test_main.py
