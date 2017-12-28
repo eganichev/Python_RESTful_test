@@ -7,9 +7,10 @@ The idea here is for us to see how you design a minimalistic API. This API will 
 used to perform CRUD operations on a model called User.
 
 **Docker**
-
-docker-compose build
-docker-compose up
+```
+$ docker-compose build
+$ docker-compose up
+```
 
 **Installation**
 ```
