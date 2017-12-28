@@ -6,12 +6,6 @@ Python RESTful API test
 The idea here is for us to see how you design a minimalistic API. This API will be 
 used to perform CRUD operations on a model called User.
 
-**Docker**
-```
-$ docker-compose build
-$ docker-compose up
-```
-
 **Installation**
 ```
 $ git clone https://github.com/eganichev/Python_RESTful_test.git
@@ -25,6 +19,12 @@ if you want to edit configurations, change this in main.py
 ```
 HOST = '0.0.0.0'
 DB_HOST = 'db'
+```
+
+**Docker**
+```
+$ docker-compose build
+$ docker-compose up
 ```
 
 **Testing**
