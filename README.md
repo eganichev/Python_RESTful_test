@@ -13,7 +13,7 @@ docker-compose up
 
 **Installation**
 
-1. git clone https://github.com/eganichev/Python_RESTful_test.git
+1. $ git clone https://github.com/eganichev/Python_RESTful_test.git
 2. virtualenv -p python3.5 venv
 3. source venv/bin/activate
 4. cd Python_RESTful_test
