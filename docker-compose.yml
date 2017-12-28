@@ -1,0 +1,13 @@
+version: '2'
+services:
+  db:
+    image: mongo:3.0.2
+    hostname: db
+
+  flaskweb:
+    build: .
+    command: python -u main.py
+    ports:
+      - "5000:5000"
+    links:
+      - db
