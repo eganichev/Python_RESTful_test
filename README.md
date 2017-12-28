@@ -11,8 +11,8 @@ used to perform CRUD operations on a model called User.
 docker-compose build
 docker-compose up
 
-
 **Installation**
+
 1. git clone https://github.com/eganichev/Python_RESTful_test.git
 2. virtualenv -p python3.5 venv
 3. source venv/bin/activate
@@ -24,4 +24,5 @@ docker-compose up
 7. python main.py
 
 **Testing**
+
 Run: python tests/test_main.py
