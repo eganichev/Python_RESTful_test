@@ -13,19 +13,19 @@ docker-compose up
 
 **Installation**
 ```
-1. $ git clone https://github.com/eganichev/Python_RESTful_test.git
-2. $ virtualenv -p python3.5 venv
-3. $ source venv/bin/activate
-4. $ cd Python_RESTful_test
-5. $ pip install -r requirements.txt
+$ git clone https://github.com/eganichev/Python_RESTful_test.git
+$ virtualenv -p python3.5 venv
+$ source venv/bin/activate
+$ cd Python_RESTful_test
+$ pip install -r requirements.txt
 ```
-6. if you want to edit configurations, change this in main.py 
-    ```
-    HOST = '0.0.0.0'
-    DB_HOST = 'db'
-    ```
+if you want to edit configurations, change this in main.py 
 ```
-7. python main.py
+HOST = '0.0.0.0'
+DB_HOST = 'db'
+```
+```
+python main.py
 ```
 
 **Testing**
