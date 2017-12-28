@@ -30,7 +30,6 @@ python main.py
 
 **Testing**
 
-Run: 
 ```
 python -m unittests tests/test_main.py
 ```
