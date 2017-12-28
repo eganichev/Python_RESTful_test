@@ -13,6 +13,7 @@ from passlib.hash import pbkdf2_sha256
 auth = HTTPBasicAuth()
 app = Flask(__name__, static_url_path="")
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+app.config["JSONIFY_PRETTYPRINT_REGULAR"] = False
 
 HOST = '0.0.0.0'
 DB_HOST = 'db'
@@ -33,15 +34,15 @@ def create_app(app, db_name, db_uri, testable=False):
 
 @app.route('/api/login', methods=['POST'])
 def login():
-    if not request.json:
+    if not request.get_json():
         abort(400)
     else:
-        username = request.json.get('username', '')
-        password = request.json.get('password', '')
+        username = request.get_json().get('username', '')
+        password = request.get_json().get('password', '')
         if not (username or password):
             abort(400)  # missing arguments
         try:
-            client = request.json
+            client = request.get_json()
             validate(client, json_client_schema)
             login_user = app.mongo_mgr.db.credentials.find_one_or_404({'username': username})
             if login_user:
@@ -56,21 +57,21 @@ def login():
 
 @app.route('/api/register', methods=['POST'])
 def register():
-    if not request.json:
+    if not request.get_json():
         abort(400)
     else:
-        username = request.json.get('username', '')
-        password = request.json.get('password', '')
+        username = request.get_json().get('username', '')
+        password = request.get_json().get('password', '')
 
         if not (username or password):
             abort(400)
         elif app.mongo_mgr.db.credentials.find_one({'username': username}):
             abort(400)
         try:
-            client = request.json
+            client = request.get_json()
             client['password'] = pbkdf2_sha256.hash(password)
             validate(client, json_client_schema)
-            app.mongo_mgr.db.credentials.insert(client)
+            app.mongo_mgr.db.credentials.insert_one(client)
             return jsonify({'username': client['username']})
 
         except Exception as e:
@@ -135,13 +136,13 @@ def create_user():
     Should add a new user to the users collection, with validation
     note: Always return the appropriate response for the action requested.
     """
-    if not request.json:
+    if not request.get_json():
         abort(400)
     else:
         try:
-            user = request.json
+            user = request.get_json()
             validate(user, json_user_schema)
-            app.mongo_mgr.db.users.insert(user)
+            app.mongo_mgr.db.users.insert_one(user)
         except Exception as e:
             abort(400)
     return make_response(jsonify({'result': 'OK'}), 200)
@@ -154,7 +155,7 @@ def update_user(user_id):
     Update user specified with user ID and return updated user contents
     Note: Always return the appropriate response for the action requested.
     """
-    data = request.json
+    data = request.get_json()
     if not data:
         abort(400)
     try:
