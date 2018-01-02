@@ -10,7 +10,8 @@ json_user_schema = {
         "lat": {"type": "number"},
         "lon": {"type": "number"}
     },
-    "required": ["first_name", "last_name", "lat", "lon"]
+    "required": ["first_name", "last_name", "lat", "lon"],
+    "additionalProperties": False
 }
 
 json_put_user_schema = {
@@ -21,7 +22,8 @@ json_put_user_schema = {
         "lat": {"type": "number"},
         "lon": {"type": "number"}
     },
-    "required": ["first_name", "last_name"]
+    "required": ["first_name", "last_name"],
+    "additionalProperties": False
 }
 
 json_client_schema = {
@@ -30,7 +32,8 @@ json_client_schema = {
         "username": {"type": "string"},
         "password": {"type": "string"}
     },
-    "required": ["username", "password"]
+    "required": ["username", "password"],
+    "additionalProperties": False
 }
 
 

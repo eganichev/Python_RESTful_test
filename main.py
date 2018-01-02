@@ -187,23 +187,27 @@ def get_distances():
     This should be GET only.
     You can use numpy or whatever suits you
     """
-    pairs = list(itertools.combinations(app.mongo_mgr.db.users.find({}), 2))
-    distances = []
-    for p1, p2 in pairs:
-        distances.append({"id1": str(p1["_id"]),
-                          "id2": str(p2["_id"]),
-                          "dist": calculate_distance(p1['lat'], p1['lon'], p2['lat'], p2['lon'])})
-    stat = {}
-    print(distances)
-    stat["min"] = min(i['dist'] for i in distances)
-    stat["max"] = max(i['dist'] for i in distances)
-    stat["avg"] = statistics.mean(i['dist'] for i in distances)
-    stat["std"] = statistics.stdev(i['dist'] for i in distances)
+    users_list = app.mongo_mgr.db.users.find({})
 
-    return jsonify({
-        "distances": distances,
-        "stat": stat
-    })
+    if users_list.count() < 3:
+        return make_response(jsonify({'error': 'Need at least 3 users'}), 500)
+    else:
+        pairs = list(itertools.combinations(users_list, 2))
+        distances = []
+        for p1, p2 in pairs:
+            distances.append({"id1": str(p1["_id"]),
+                              "id2": str(p2["_id"]),
+                              "dist": calculate_distance(p1['lat'], p1['lon'], p2['lat'], p2['lon'])})
+        stat = {}
+        stat["min"] = min(i['dist'] for i in distances)
+        stat["max"] = max(i['dist'] for i in distances)
+        stat["avg"] = statistics.mean(i['dist'] for i in distances)
+        stat["std"] = statistics.stdev(i['dist'] for i in distances)
+
+        return jsonify({
+            "distances": distances,
+            "stat": stat
+        })
 
 
 def calculate_distance(lat1, long1, lat2, long2):

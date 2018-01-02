@@ -27,16 +27,16 @@ class FlaskrTestCase(unittest.TestCase):
     def test_create_user(self):
         response = self.client.post('/api/register', data=json.dumps(dict(username="username", password="password")),
                                     content_type='application/json')
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         data = json.loads(response.data)
-        self.assertEquals(data, {'username': 'username'})
+        self.assertEqual(data, {'username': 'username'})
 
     def test_login(self):
         response = self.client.post('/api/login', data=json.dumps(dict(username="username", password="password")),
                                     content_type='application/json')
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         data = json.loads(response.data)
-        self.assertEquals(data, {'username': 'username'})
+        self.assertEqual(data, {'username': 'username'})
 
     @patch('main.app.verify_session')
     def verify_session(self, mock_verify_session):
@@ -48,27 +48,31 @@ class FlaskrTestCase(unittest.TestCase):
                                                                                 lat=65.23, lon=10.2)),
                                     content_type='application/json', headers=self.headers)
 
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         data = json.loads(response.data)
-        self.assertEquals(data, {'result': 'OK'})
+        self.assertEqual(data, {'result': 'OK'})
 
         response = self.client.post('/prt/api/v1.0/users', data=json.dumps(dict(first_name="u2", last_name="uu2",
                                                                                 lat=15.23, lon=15.2)),
                                     content_type='application/json', headers=self.headers)
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         data = json.loads(response.data)
-        self.assertEquals(data, {'result': 'OK'})
+        self.assertEqual(data, {'result': 'OK'})
 
         response = self.client.post('/prt/api/v1.0/users', data=json.dumps(dict(first_name="u3", last_name="uu3",
                                                                                 lat=35.23, lon=66.2)),
                                     content_type='application/json', headers=self.headers)
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         data = json.loads(response.data)
-        self.assertEquals(data, {'result': 'OK'})
+        self.assertEqual(data, {'result': 'OK'})
 
-        response = self.client.post('/prt/api/v1.0/users', data=json.dumps(dict(first_name="u3")),
+        response = self.client.post('/prt/api/v1.0/users', data=json.dumps(dict(first_name="u3", last_name=123)),
                                     content_type='application/json', headers=self.headers)
-        self.assertEquals(response.status_code, 400)
+        self.assertEqual(response.status_code, 400)
+
+        response = self.client.post('/prt/api/v1.0/users', data=json.dumps(dict()),
+                                    content_type='application/json', headers=self.headers)
+        self.assertEqual(response.status_code, 400)
 
     def test_get_all(self):
         all_users = self.client.get('/prt/api/v1.0/users', headers=self.headers)
@@ -85,7 +89,7 @@ class FlaskrTestCase(unittest.TestCase):
                                    data=json.dumps(dict(first_name="new_u1", last_name="new_uu1",
                                                         lat=33.23, lon=55.2)),
                                    content_type='application/json', headers=self.headers)
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         data = json.loads(response.data)
         self.assertEqual(data["first_name"], "new_u1")
 
@@ -94,14 +98,14 @@ class FlaskrTestCase(unittest.TestCase):
                                    data=json.dumps(dict(first_name="new_u2", last_name="new_uu2",
                                                         lat=35.23, lon=55.2)),
                                    content_type='application/json', headers=self.headers)
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         data = json.loads(response.data)
         self.assertEqual(data["first_name"], "new_u2")
 
         u3 = random.choice(users_list)
         response = self.client.put('/prt/api/v1.0/users/' + u3["_id"], data=json.dumps(dict(first_name="u3")),
                                    content_type='application/json', headers=self.headers)
-        self.assertEquals(response.status_code, 400)
+        self.assertEqual(response.status_code, 400)
 
     def test_distance(self):
         data = json.loads(self.client.get('/todo/api/v1.0/distances', headers=self.headers).data)
@@ -119,7 +123,7 @@ class FlaskrTestCase(unittest.TestCase):
 
         all_users = self.client.get('/prt/api/v1.0/users', headers=self.headers)
         users_len = len(json.loads(all_users.data))
-        self.assertEquals(users_len, 2)
+        self.assertEqual(users_len, 2)
 
 
 if __name__ == '__main__':
